@@ -1,3 +1,11 @@
+var averages ={
+apple:[],
+orange:[],
+banana:[],
+pears:[]
+
+};
+
 
 //market object holds all fruit prices updated by the random fruit function
 var market={
@@ -33,7 +41,7 @@ console.log(user);
 
 $(document).ready(function(){
 	// this function sets the p tag for cash to the value in the user object
-
+	populateMarketDOM();
 	$('.cash').children('p').text(user.cash);
 //this function calls populate market DOM every 15 secs
 	setInterval(function () {populateMarketDOM()},15000);
@@ -43,6 +51,7 @@ $(document).ready(function(){
 		buyFruit($(this).data('name'));
 // this function sets the p tag for cash to the value in the user object	
 		$('.cash').children('p').text(user.cash);
+
 
 
 	});
@@ -95,29 +104,68 @@ function buyFruit(clickedButton){
        {
        	user.apple.num++;
        	user.cash -= market.apple;
-
+       	$('.userApple').children('.number').text(user.apple.num);
+       	averages.apple.push(market.apple);
+       	user.apple.avePrice = getAverage(averages.apple);
+       	$('.userApple').children('.avgPrice').text(user.apple.avePrice);
        }
         break;
     case "orangeButton":
         {	
         	user.orange.num++;
-       		user.cash -= market.orange;}
+       		user.cash -= market.orange;
+       		$('.userOrange').children('.number').text(user.orange.num);
+       		averages.orange.push(market.orange);
+       		user.orange.avePrice = getAverage(averages.orange);
+       		$('.userOrange').children('.avgPrice').text(user.orange.avePrice);
+       	}
+
         break;
     case "bananasButton":
         {	
         	user.banana.num++;
-       		user.cash -= market.banana;}
+       		user.cash -= market.banana;
+       		$('.userBanana').children('.number').text(user.banana.num);
+       		averages.banana.push(market.banana);
+       		user.banana.avePrice = getAverage(averages.banana);
+       		$('.userBanana').children('.avgPrice').text(user.banana.avePrice);
+       	}
         break;
     case "pearsButton":
         {
         	user.pears.num++;
        		user.cash -= market.pears;
+       		$('.userPear').children('.number').text(user.pears.num);
+        	averages.pears.push(market.pears);
+        	user.pears.avePrice = getAverage(averages.pears);
+       		$('.userPear').children('.avgPrice').text(user.pears.avePrice);
         }
         break;
   
 }
+user.cash=parseFloat(user.cash.toFixed(2));
+console.log(averages);
 
-	console.log("this is user",user);
-console.log("this is the fruit ",clickedButton);
+	//console.log("this is user",user);
+//console.log("this is the fruit ",clickedButton);
 };
+
+function getAverage(array){
+var total=0;
+for (var i=0;i<array.length;i++)
+{
+	total+=array[i];	
+
+}
+return parseFloat((total/array.length).toFixed(2));
+
+};
+
+
+
+
+
+
+
+
 
